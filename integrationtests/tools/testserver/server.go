@@ -7,8 +7,10 @@ import (
 	"net/http"
 	"strconv"
 
+	quic "github.com/lucas-clemente/quic-go"
 	"github.com/lucas-clemente/quic-go/h2quic"
 	"github.com/lucas-clemente/quic-go/internal/testdata"
+	"github.com/lucas-clemente/quic-go/protocol"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -75,10 +77,15 @@ func GeneratePRData(l int) []byte {
 	return res
 }
 
-func StartQuicServer() {
+// StartQuicServer starts a h2quic.Server.
+// versions is a slice of supported QUIC versions. It may be nil, then all supported versions are used.
+func StartQuicServer(versions []protocol.VersionNumber) {
 	server = &h2quic.Server{
 		Server: &http.Server{
 			TLSConfig: testdata.GetTLSConfig(),
+		},
+		QuicConfig: &quic.Config{
+			Versions: versions,
 		},
 	}
 
