@@ -19,6 +19,7 @@ env:
   matrix:
     - TRAVIS_GOARCH=amd64 TESTMODE=unit
     - TRAVIS_GOARCH=amd64 TESTMODE=integration
+    - TRAVIS_GOARCH=amd64 TESTMODE=race_integration
     - TRAVIS_GOARCH=386 TESTMODE=unit
     - TRAVIS_GOARCH=386 TESTMODE=integration
 
