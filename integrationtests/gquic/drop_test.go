@@ -3,12 +3,14 @@ package gquic_test
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"os/exec"
 	"strconv"
 
 	_ "github.com/lucas-clemente/quic-clients" // download clients
 	"github.com/lucas-clemente/quic-go/integrationtests/tools/proxy"
 	"github.com/lucas-clemente/quic-go/integrationtests/tools/testserver"
+	"github.com/lucas-clemente/quic-go/internal/utils"
 	"github.com/lucas-clemente/quic-go/protocol"
 
 	. "github.com/onsi/ginkgo"
@@ -42,7 +44,13 @@ var _ = Describe("Drop tests", func() {
 		Expect(bytes.Contains(session.Out.Contents(), testserver.PRData)).To(BeTrue())
 	}
 
+	BeforeEach(func() {
+		utils.SetLogLevel(utils.LogLevelDebug)
+		log.SetOutput(GinkgoWriter)
+	})
+
 	AfterEach(func() {
+		utils.SetLogLevel(utils.LogLevelNothing)
 		Expect(proxy.Close()).To(Succeed())
 	})
 

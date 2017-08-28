@@ -16,5 +16,5 @@ if [ ${TESTMODE} == "integration" ]; then
     ginkgo --race --randomizeAllSpecs --randomizeSuites --trace --progress benchmark -- -samples=1 -size=10
   fi
   # run integration tests
-  ginkgo -v -r --randomizeAllSpecs --randomizeSuites --trace --progress integrationtests
+  ginkgo -r --randomizeAllSpecs --randomizeSuites --trace --progress integrationtests
 fi
